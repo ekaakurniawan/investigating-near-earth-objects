@@ -97,7 +97,6 @@ class NEODatabase:
             return self._name_to_neo[name]
         else:
             return None
-        return None
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of filters.
