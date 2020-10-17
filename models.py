@@ -44,19 +44,19 @@ class NearEarthObject:
         # You should coerce these values to their appropriate data type and
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
-        if 'pdes' in info:
+        if 'pdes' in info and info['pdes']:
             self.designation = info['pdes']
         else:
             raise KeyError('The unique primary designation (pdes) for NEO is missing.')
-        if 'name' in info:
+        if 'name' in info and info['name']:
             self.name = info['name']
         else:
             self.name = None
-        if 'diameter' in info:
+        if 'diameter' in info and info['diameter']:
             self.diameter = float(info['diameter'])
         else:
             self.diameter = float('nan')
-        if 'pha' in info:
+        if 'pha' in info and info['pha']:
             if info['pha'] == 'Y':
                 hazardous_flag = True
             else:
@@ -120,28 +120,25 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        if 'des' in info:
+        if 'des' in info and info['des']:
             self._designation = info['des']
         else:
             raise KeyError('The unique designation for CA is missing.')
-        if 'cd' in info:
+        if 'cd' in info and info['cd']:
             self.time = cd_to_datetime(info['cd'])
         else:
             self.time = None
-        if 'dist' in info:
+        if 'dist' in info and info['dist']:
             self.distance = float(info['dist'])
         else:
             self.distance = 0.0
-        if 'v_rel' in info:
+        if 'v_rel' in info and info['v_rel']:
             self.velocity = float(info['v_rel'])
         else:
             self.velocity = 0.0
 
         # Create an attribute for the referenced NEO, originally None.
-        if 'neo' in info:
-            self.neo = info['neo']
-        else:
-            raise KeyError('This CA fails to refer to the NEO.')
+        self.neo = None
 
     @property
     def time_str(self):
