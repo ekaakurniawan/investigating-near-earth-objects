@@ -24,7 +24,7 @@ def write_to_csv(results, filename):
     :param results: An iterable of `CloseApproach` objects.
     :param filename: A Path-like object pointing to where the data should be saved.
     """
-    fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s', 
+    fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s',
                   'designation', 'name', 'diameter_km',
                   'potentially_hazardous')
     # TODO: Write the results to a CSV file, following the specification in the instructions.
@@ -54,7 +54,7 @@ def write_to_csv(results, filename):
             else:
                 hazardous = 'False'
             result_str = (result.time_str, distance, velocity, result._designation,
-                        name, diameter, hazardous)
+                          name, diameter, hazardous)
             f.writelines(','.join(result_str) + '\n')
 
 
