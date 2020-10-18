@@ -24,8 +24,38 @@ def write_to_csv(results, filename):
     :param results: An iterable of `CloseApproach` objects.
     :param filename: A Path-like object pointing to where the data should be saved.
     """
-    fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s', 'designation', 'name', 'diameter_km', 'potentially_hazardous')
+    fieldnames = ('datetime_utc', 'distance_au', 'velocity_km_s', 
+                  'designation', 'name', 'diameter_km',
+                  'potentially_hazardous')
     # TODO: Write the results to a CSV file, following the specification in the instructions.
+    with open(filename, 'w') as f:
+        # Write header
+        f.writelines(','.join(fieldnames) + '\n')
+        # Write results
+        for result in results:
+            if result.distance:
+                distance = str(result.distance)
+            else:
+                distance = ''
+            if result.velocity:
+                velocity = str(result.velocity)
+            else:
+                velocity = ''
+            if result.neo.name:
+                name = result.neo.name
+            else:
+                name = ''
+            if result.neo.diameter:
+                diameter = str(result.neo.diameter)
+            else:
+                diameter = ''
+            if result.neo.hazardous:
+                hazardous = 'True'
+            else:
+                hazardous = 'False'
+            result_str = (result.time_str, distance, velocity, result._designation,
+                        name, diameter, hazardous)
+            f.writelines(','.join(result_str) + '\n')
 
 
 def write_to_json(results, filename):
@@ -40,3 +70,12 @@ def write_to_json(results, filename):
     :param filename: A Path-like object pointing to where the data should be saved.
     """
     # TODO: Write the results to a JSON file, following the specification in the instructions.
+    results_json = []
+    for result in results:
+        neo_serialized = result.neo.serialize()
+        result_serialized = result.serialize()
+        result_serialized['neo'] = neo_serialized
+        results_json.append(result_serialized)
+
+    with open(filename, 'w') as f:
+        json.dump(results_json, f)
