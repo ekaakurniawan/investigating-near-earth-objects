@@ -26,8 +26,8 @@ def load_neos(neo_csv_path):
     """
     # TODO: Load NEO data from the given CSV file.
     neos = []
-    with open(neo_csv_path, 'r') as file_handler:
-        neos_csv = csv.DictReader(file_handler)
+    with open(neo_csv_path, 'r') as f:
+        neos_csv = csv.DictReader(f)
         for neo_csv in neos_csv:
             neos.append(NearEarthObject(**neo_csv))
     return tuple(neos)
@@ -41,8 +41,8 @@ def load_approaches(cad_json_path):
     """
     # TODO: Load close approach data from the given JSON file.
     approaches = []
-    with open(cad_json_path, 'r') as file_handler:
-        cad_json = json.load(file_handler)
+    with open(cad_json_path, 'r') as f:
+        cad_json = json.load(f)
         cad_fields = cad_json['fields']
         cad_data = cad_json['data']
         for cad_datum in cad_data:
